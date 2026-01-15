@@ -1,0 +1,7 @@
+{
+  "name": "QuizPilot Pro AI - TMA",
+  "description": "Telegram Mini App for National Certificate prep and AI Quiz Generation",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
