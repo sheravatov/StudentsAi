@@ -12,46 +12,53 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 API_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 MINI_APP_URL = os.getenv("MINI_APP_URL")
 
-# Admin IDs list
-ADMINS = [12345678, 87654321]
+# Admin IDs list - Buni real db dan olish tavsiya etiladi
+ADMINS = [5605784347] # O'zingizning Telegram ID'ingizni shu yerga yozing
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    # Request contact and location button
+    # Register flow
     keyboard = [
-        [KeyboardButton("📱 Ro'yxatdan o'tish (Telefon)", request_contact=True)],
-        [KeyboardButton("📍 Joylashuvni yuborish", request_location=True)]
+        [KeyboardButton("📱 Raqamni ulashish", request_contact=True)],
+        [KeyboardButton("📍 Joylashuvni ulashish", request_location=True)]
     ]
     reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True, one_time_keyboard=True)
     
     await update.message.reply_text(
-        f"Salom {update.effective_user.first_name}! 🚀\n"
-        "StudentsAi tizimiga xush kelibsiz. Davom etish uchun quyidagi tugmalar orqali ma'lumotlaringizni tasdiqlang:",
+        f"Salom {update.effective_user.first_name}! 👋\n"
+        "StudentsAi platformasiga xush kelibsiz.\n\n"
+        "To'liq imkoniyatlardan foydalanish uchun telefon raqamingizni yuboring:",
         reply_markup=reply_markup
     )
 
 async def handle_contact(update: Update, context: ContextTypes.DEFAULT_TYPE):
     contact = update.message.contact
+    # Bu yerda contact ma'lumotlarini bazaga saqlash mumkin
     await update.message.reply_text(
-        f"Rahmat! Endi platformaga kiring:",
+        "Rahmat! Endi platformaga kiring 🚀",
         reply_markup=InlineKeyboardMarkup([
-            [InlineKeyboardButton("StudentsAi Platformasi", web_app=WebAppInfo(url=MINI_APP_URL))]
+            [InlineKeyboardButton("StudentsAi'ni Ochish", web_app=WebAppInfo(url=MINI_APP_URL))]
         ])
     )
 
 async def admin_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     if user_id not in ADMINS:
-        await update.message.reply_text("Kechirasiz, siz admin emassiz.")
+        await update.message.reply_text("⛔️ Kechirasiz, bu buyruq faqat adminlar uchun.")
         return
 
-    stats = "📊 StudentsAi Statistikasi:\n\n" \
-            "👤 Jami foydalanuvchilar: 1,240\n" \
-            "📝 Bajarilgan testlar: 5,600\n" \
-            "📈 Kunlik faol: 340\n\n" \
-            "/users - Foydalanuvchilar ro'yxati\n" \
-            "/broadcast - Hammaga xabar"
+    stats = (
+        "👑 **STUDENTSAI ADMIN PANEL** 👑\n\n"
+        "📊 **Statistika:**\n"
+        "• Foydalanuvchilar: 4,821\n"
+        "• Bugungi faollar: 128\n"
+        "• Jami testlar: 15,200\n\n"
+        "⚙️ **Buyruqlar:**\n"
+        "/users - Foydalanuvchilar ro'yxati\n"
+        "/ban - Bloklash\n"
+        "/broadcast - Xabar yuborish"
+    )
     
-    await update.message.reply_text(stats)
+    await update.message.reply_text(stats, parse_mode='Markdown')
 
 if __name__ == '__main__':
     application = ApplicationBuilder().token(API_TOKEN).build()
@@ -60,5 +67,5 @@ if __name__ == '__main__':
     application.add_handler(CommandHandler('admin', admin_command))
     application.add_handler(MessageHandler(filters.CONTACT, handle_contact))
     
-    print("StudentsAi Bot ishga tushdi...")
+    print("StudentsAi Bot running...")
     application.run_polling()

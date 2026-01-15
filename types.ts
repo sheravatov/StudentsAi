@@ -7,13 +7,13 @@ export enum UserStatus {
   PUPIL = 'O\'QUVCHI'
 }
 
-// Added missing AppRole enum used in Sidebar and DashboardView
+// Added AppRole used in Sidebar.tsx and DashboardView.tsx
 export enum AppRole {
   ADMIN = 'ADMIN',
   STUDENT = 'STUDENT'
 }
 
-// Added missing RequestType enum used across various quiz creation and analysis components
+// Added RequestType used in DashboardView.tsx, QuizForm.tsx, etc.
 export enum RequestType {
   DOCUMENT_PARSE = 'DOCUMENT_PARSE',
   ADMIN_REQUEST = 'ADMIN_REQUEST',
@@ -33,6 +33,7 @@ export interface UserProfile {
   solved_quizzes: number;
   rank: number;
   joined_date: string;
+  is_admin: boolean;
 }
 
 export interface QuizQuestion {
@@ -43,12 +44,9 @@ export interface QuizQuestion {
     B: string;
     C: string;
     D: string;
-    // Added index signature to allow dynamic access to options as seen in QuizCreator
-    [key: string]: string;
   };
   correct_answer: string;
   explanation: string;
-  // Added optional property used for question illustrations
   image_url?: string;
 }
 
@@ -58,12 +56,19 @@ export interface QuizPackage {
   subject: string;
   questions: QuizQuestion[];
   created_at: string;
-  // Added missing properties difficulty and language used in AdminDashboard and QuizCreator
   difficulty: 'easy' | 'medium' | 'hard';
   language: Language;
 }
 
-// Added missing StudentAnalysis interface used in AnalysisResult component
+// Added UserResult for tracking test performance
+export interface UserResult {
+  quiz_id: string;
+  score: number;
+  total: number;
+  date: string;
+}
+
+// Added StudentAnalysis for performance feedback visualization
 export interface StudentAnalysis {
   summary: {
     accuracy: number;
@@ -73,19 +78,11 @@ export interface StudentAnalysis {
   recommendations: string[];
 }
 
-// Added missing UserResult interface used for tracking student performance
-export interface UserResult {
-  quiz_id: string;
-  score: number;
-  total: number;
-  date: string;
-}
-
-// Added missing CertSubject interface for certificate preparation view
+// Added CertSubject for National Certificate modules
 export interface CertSubject {
   id: string;
   name: string;
   icon: string;
   total_questions: number;
-  questions: QuizQuestion[];
+  questions: any[];
 }

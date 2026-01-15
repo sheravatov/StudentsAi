@@ -9,22 +9,22 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
   const tabs = [
     { id: 'home', icon: 'fa-house', label: 'Asosiy' },
-    { id: 'quiz', icon: 'fa-magic', label: 'Quiz AI' },
-    { id: 'cert', icon: 'fa-certificate', label: 'Sertifikat' },
-    { id: 'admin', icon: 'fa-user-shield', label: 'Admin' }
+    { id: 'quiz', icon: 'fa-bolt', label: 'Quiz AI' },
+    { id: 'cert', icon: 'fa-certificate', label: 'Sertifikat' }
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-slate-100 px-6 py-3 flex justify-between items-center z-50">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-slate-100 px-8 py-3 flex justify-between items-center z-50">
       {tabs.map(tab => (
         <button
           key={tab.id}
           onClick={() => setActiveTab(tab.id)}
-          className={`flex flex-col items-center space-y-1 transition-all ${activeTab === tab.id ? 'text-blue-600' : 'text-slate-400'}`}
+          className={`flex flex-col items-center space-y-1 transition-all ${activeTab === tab.id ? 'text-[#2563EB]' : 'text-slate-400'}`}
         >
-          <i className={`fas ${tab.icon} text-lg`}></i>
-          <span className="text-[10px] font-bold uppercase tracking-wider">{tab.label}</span>
-          {activeTab === tab.id && <div className="w-1 h-1 bg-blue-600 rounded-full animate-pulse"></div>}
+          <div className={`p-2 rounded-xl transition-all ${activeTab === tab.id ? 'bg-blue-50' : 'bg-transparent'}`}>
+            <i className={`fas ${tab.icon} text-lg`}></i>
+          </div>
+          <span className="text-[9px] font-black uppercase tracking-wider">{tab.label}</span>
         </button>
       ))}
     </nav>

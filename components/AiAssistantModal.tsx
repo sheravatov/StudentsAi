@@ -1,6 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { getStudentsAiAssistantResponse } from '../geminiService';
+// Fixed the import name to match the exported member from geminiService.ts
+import { getStudentsAiResponse } from '../geminiService';
 import { UserProfile } from '../types';
 
 interface AiAssistantModalProps {
@@ -28,7 +29,8 @@ const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ user, onClose }) =>
     setLoading(true);
     
     try {
-      const response = await getStudentsAiAssistantResponse(userText, user);
+      // Corrected the function call from getStudentsAiAssistantResponse to getStudentsAiResponse
+      const response = await getStudentsAiResponse(userText, user);
       setMessages(prev => [...prev, { role: 'bot', text: response || "Kechirasiz, xatolik yuz berdi." }]);
     } catch (err) {
       setMessages(prev => [...prev, { role: 'bot', text: "Aloqa uzildi..." }]);

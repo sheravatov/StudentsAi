@@ -1,7 +1,8 @@
 {
-  "name": "QuizPilot Pro AI - TMA",
-  "description": "Telegram Mini App for National Certificate prep and AI Quiz Generation",
+  "name": "StudentsAi",
+  "description": "AI-powered educational assistant and quiz platform",
   "requestFramePermissions": [
-    "camera"
+    "camera",
+    "geolocation"
   ]
 }
